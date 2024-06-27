@@ -22,7 +22,13 @@ GET /v1/postos/{id}
 Retorna detalhes de um posto de vacinação específico pelo ID.  
 
 POST /v1/postos
-Cria um novo posto de vacinação.  
+Cria um novo posto de vacinação.  Exemplo:
+```
+{
+  "nome": "string",
+  "vacinas": []
+}
+```
 
 PUT /v1/postos/{id} 
 Atualiza as informações de um posto de vacinação existente pelo ID.  
@@ -31,7 +37,10 @@ DELETE /v1/postos/{id}
 Remove um posto de vacinação existente pelo ID.  
 
 PUT /v1/postos/{postoId}/vacinas
-Associa uma vacina existente a um posto de vacinação pelo ID do posto.  
+Associa uma vacina existente a um posto de vacinação pelo ID do posto. Exemplo:  
+```
+{"3fa85f64-5717-4562-b3fc-2c963f66afa6"}
+```
 
 ### Vacinas  
 
@@ -42,7 +51,16 @@ GET /v1/vacinas/{id}
 Retorna detalhes de uma vacina específica pelo ID.  
 
 POST /v1/vacinas
-Cria uma nova vacina.  
+Cria uma nova vacina.  Ex:
+```
+{
+  "nome": "gripe",
+  "fabricante": "pfizer",
+  "lote": "abcd1234",
+  "quantidade": 1000,
+  "validade": "2026-06-27T08:35:33.678Z"
+}
+```
 
 PUT /v1/vacinas/{id}
 Atualiza as informações de uma vacina existente pelo ID.  
@@ -80,8 +98,10 @@ dotnet ef database update # gera o banco de dados ou atualiza caso já exista
 ```
 Execute a aplicação. O navegador deve abrir permitindo você visualizar e testar a API utilizando o Swagger.
 
-Primeiro cadastre separadamente os Postos e as Vacinas que você queira. Depois, utilize a rota /v1/postos/{postoId}/vacinas
+Primeiro cadastre separadamente os Postos e as Vacinas que você queira. Depois, utilize a rota  /v1/postos/{postoId}/vacinas 
 para atrelar uma vacina a um posto, utilizando seus Id's.
 
 ### Pontos de Melhoria
+- é preciso passar uma lista de vacinas vazia na criação de um novo posto
+- é preciso criar tanto o posto como a vacina separados, e depois uni-los via rota /v1/postos/{postoId}/vacinas
 - só é possível adicionar uma vacina por vez ao posto
