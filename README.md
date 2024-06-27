@@ -82,3 +82,6 @@ Execute a aplicação. O navegador deve abrir permitindo você visualizar e test
 
 Primeiro cadastre separadamente os Postos e as Vacinas que você queira. Depois, utilize a rota /v1/postos/{postoId}/vacinas
 para atrelar uma vacina a um posto, utilizando seus Id's.
+
+### Pontos de Melhoria
+- só é possível adicionar uma vacina por vez ao posto
