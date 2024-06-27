@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using VacinasApi.Postos;
-using VacinasApi.Vacinas;
+using System.Reflection.PortableExecutable;
+using VacinasApi.Models;
 
 namespace VacinasApi.Data
 {
@@ -9,10 +9,26 @@ namespace VacinasApi.Data
         public DbSet<Posto> Postos { get; set; }
         public DbSet<Vacina> Vacinas { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public AppDbContext(DbContextOptions<AppDbContext> options)
+        : base(options)
         {
-            optionsBuilder.UseSqlite("Data Source=Db.sqlite");
-            base.OnConfiguring(optionsBuilder);
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Posto>()
+                .HasIndex(p => p.Nome)
+            .IsUnique();
+
+            modelBuilder.Entity<Vacina>()
+                .HasIndex(v => v.Lote)
+            .IsUnique();
+
+            modelBuilder.Entity<Vacina>()
+                .HasOne(v => v.Posto)
+                .WithMany(p => p.Vacinas)
+                .HasForeignKey(v => v.PostoId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }
